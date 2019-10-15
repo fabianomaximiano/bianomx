@@ -769,7 +769,7 @@ add_theme_support( 'post-thumbnails' );
 add_image_size( $name, $width, $height, $crop );
 
 // Vai cortar a imagem para exatamente 600 px de largura por 400 px de altura.
-add_image_size( 'imagem-slide', 1339, 586, true );
+add_image_size( 'imagem-slide', 1339, 350, true );
 
 // Vai gerar uma imagem com 300 px de largura e altura proporcional sem distorcer nada.
 add_image_size( 'capa-artigo', 600, 250);
