@@ -302,8 +302,8 @@ footer.comment-meta > .comment-author.vcard{
     background-color: #ccc;
     color: #000;
 }
-footer > div > img.avatar.avatar-50 > .photo{
-	border: 1px solid dashed red;
+footer > div > img.avatar.avatar-32.photo{
+	border: 1px dashed red;
 	width: 50px;
 	height: 50px;
 	
