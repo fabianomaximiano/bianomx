@@ -6,62 +6,59 @@ $diretorio = get_template_directory_uri(); ?>
 <div class="container">
 	<div class="row">
 		<div class="col-sm-8">
+			<?php 
+			$args = array(
+				'post_type' => 'artigo',
+					//'posts_per_page'=>3,
+				'tax_query' => $taxQuery
+				);
+
+			$loop = new WP_Query($args);
+			if ($loop->have_posts()) : ?>
+			<?php while ($loop->have_posts()) : $loop->the_post(); ?>
+				<section>
+					<article>
+						<figure class="foto-legenda">
+							<?php the_post_thumbnail( 'imagem-slide' ); ?>
+							<figcaption>
+								<h2><?php echo get_post_meta( get_the_ID(),'titulo_artigo', true ); ?></h2>
+							</figcaption>
+						</a>
+					</figure>
+				</article>
+			</section>
 			<section>
-					<h2>Sobre o Autor:</h2>
-					<h3>Conheça minha historia</h3>
-					<p><?php the_author_description ();?></p>
+				<h3><?php echo get_post_meta( get_the_ID(),'subtitulo_artigo', true ); ?></h3>
 
-					<hr>
-						<div class="row">
-			<div class="col-md-12 col-sm-12 col-xs-12">
-				<figure>
-					<?php the_post_thumbnail( 'imagem-slide' ); ?>
-					<figcaption><h2><span>SP</span><span>nome da cidade</span></h2></figcaption>
-				</figure>
-			</div>
-			<div class="col-md-8 col-sm-8 col-xs-8"">
-				<span><h3><?php the_title(); ?></h3></span>
-				<p><?php the_content(); //echo get_post_meta( get_the_ID(), 'descricao_evento', true ); ?></p>
-			</div>
+				<p><?php echo get_post_meta( get_the_ID(),'conteudo_artigo', true ); ?></p>
+			</section>
+		<?php endwhile; ?>
+	<?php endif; ?>
+	<hr>
+	<?php comment_form($comment_args_bootstrap); ?>
+	<hr>
+	<div>
+	<ol class="commentlist">
+	<?php
+		//Gather comments for a specific page/post 
+		$comments = get_comments(array(
+			'post_id' => XXX,
+			'status' => 'approve' //Change this to the type of comments to be displayed
+		));
 
-<!-- 					<div class="row">
-						<div class="col-sm-6 col-md-4">
-							<div class="thumbnail">
-								<img src="images/thumbnails.png" alt="...">
-								<div class="caption">
-									<h3>Thumbnail label</h3>
-									<p>Lorem Ipsum</p>
-									<p><a href="#" class="btn btn-primary" role="button">Button</a> <a href="#" class="btn btn-default" role="button">Button</a></p>
-								</div>
-							</div>
-						</div>
-						<div class="col-sm-6 col-md-4">
-							<div class="thumbnail">
-								<img src="images/thumbnails.png" alt="...">
-								<div class="caption">
-									<h3>Thumbnail label</h3>
-									<p>Lorem ipsum</p>
-									<p><a href="#" class="btn btn-primary" role="button">Button</a> <a href="#" class="btn btn-default" role="button">Button</a></p>
-								</div>
-							</div>
-						</div>
-						<div class="col-sm-6 col-md-4">
-							<div class="thumbnail">
-								<img src="images/thumbnails.png" alt="...">
-								<div class="caption">
-									<h3>Thumbnail label</h3>
-									<p>Lorem Ipsum</p>
-									<p><a href="#" class="btn btn-primary" role="button">Button</a> <a href="#" class="btn btn-default" role="button">Button</a></p>
-								</div>
-							</div>
-						</div> -->
-					</div>
-				</section>
-		</div>
-		<!-- conteudo principal -->
+		//Display the list of comments
+		wp_list_comments(array(
+			'per_page' => 10, //Allow comment pagination
+			'reverse_top_level' => false //Show the oldest comments at the top of the list
+		), $comments);
+	?>
+</ol>
+</div>
+</div>
+<!-- conteudo principal -->
 
-		<?php get_sidebar(); ?>
-	</div><!-- /row -->
+<?php get_sidebar(); ?>
+</div><!-- /row -->
 </div><!-- /container -->
 
 <?php get_footer(); ?>
